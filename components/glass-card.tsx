@@ -18,7 +18,7 @@ export function GlassCard({ children, style, intensity = 20 }: PropsWithChildren
     );
   }
 
-  // Android/web fallback
+  
   return (
     <View style={[styles.card, styles.fallback, style]}>
       {children}

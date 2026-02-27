@@ -10,7 +10,7 @@ import type {
   TmdbWatchProviderResult,
 } from './types';
 
-// TODO: Move to environment variable for production
+
 const API_KEY = 'b6d600a0c0a03304f513bfd0504f3905';
 const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
@@ -42,11 +42,11 @@ async function tmdbFetch<T>(endpoint: string, params: Record<string, string> = {
 }
 
 export const tmdb = {
-  // Trending
+  
   getTrending: (timeWindow: 'day' | 'week' = 'week', language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>(`/trending/movie/${timeWindow}`, { language }),
 
-  // Movie lists
+  
   getPopular: (page = 1, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/movie/popular', { page: String(page), language }),
 
@@ -59,7 +59,7 @@ export const tmdb = {
   getUpcoming: (page = 1, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/movie/upcoming', { page: String(page), language }),
 
-  // Movie detail
+  
   getMovieDetail: (id: number, language = 'en-US') =>
     tmdbFetch<TmdbMovieDetail>(`/movie/${id}`, { language }),
 
@@ -78,19 +78,19 @@ export const tmdb = {
   getSimilarMovies: (id: number, page = 1, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>(`/movie/${id}/similar`, { page: String(page), language }),
 
-  // Search
+  
   searchMovies: (query: string, page = 1, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/search/movie', { query, page: String(page), language }),
 
-  // Discover (with filters)
+  
   discoverMovies: (filters: Record<string, string>, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/discover/movie', { ...filters, language }),
 
-  // Genres
+  
   getMovieGenres: (language = 'en-US') =>
     tmdbFetch<{ genres: TmdbGenre[] }>('/genre/movie/list', { language }),
 
-  // Person
+  
   getPersonDetail: (id: number, language = 'en-US') =>
     tmdbFetch<TmdbPersonDetail>(`/person/${id}`, { language }),
 

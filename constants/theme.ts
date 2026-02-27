@@ -2,28 +2,28 @@ import { Platform } from 'react-native';
 
 export const Colors = {
   light: {
-    // Backgrounds
+    
     background: '#FFFFFF',
     surface: '#FFFFFF',
     surfaceVariant: '#FFFFFF',
     elevated: '#FFFFFF',
 
-    // Text
+    
     text: '#000000',
     textSecondary: '#333333',
     textMuted: '#666666',
 
-    // Accents
+    
     accent: '#E50914',
     accentGold: '#C8A200',
     accentGoldMuted: '#8B7000',
 
-    // Tab bar
+    
     tint: '#E50914',
     tabIconDefault: '#666666',
     tabIconSelected: '#E50914',
 
-    // Semantic
+    
     icon: '#333333',
     border: '#E5E5E5',
     overlay: 'transparent',
@@ -31,28 +31,28 @@ export const Colors = {
     gradientEnd: 'transparent',
   },
   dark: {
-    // Backgrounds
+    
     background: '#000000',
     surface: '#111111',
     surfaceVariant: '#1A1A1A',
     elevated: '#252525',
 
-    // Text
+    
     text: '#FFFFFF',
     textSecondary: '#CCCCCC',
     textMuted: '#888888',
 
-    // Accents
+    
     accent: '#E50914',
     accentGold: '#FFD700',
     accentGoldMuted: '#B8960C',
 
-    // Tab bar
+    
     tint: '#E50914',
     tabIconDefault: '#666666',
     tabIconSelected: '#E50914',
 
-    // Semantic
+    
     icon: '#CCCCCC',
     border: '#333333',
     overlay: 'transparent',

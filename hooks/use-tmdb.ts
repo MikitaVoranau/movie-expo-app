@@ -17,7 +17,7 @@ function useTmdbLanguage(): string {
   return i18n.language === 'ru' ? 'ru-RU' : 'en-US';
 }
 
-// --- Movie Lists ---
+
 
 export function useTrending() {
   const language = useTmdbLanguage();
@@ -95,7 +95,7 @@ export function useUpcoming() {
   return { data, loading, error };
 }
 
-// --- Movie Detail ---
+
 
 export function useMovieDetail(id: number) {
   const language = useTmdbLanguage();
@@ -126,7 +126,7 @@ export function useMovieDetail(id: number) {
         setCredits(creditsData);
         setVideos(videosData.results);
         setReviews(reviewsData.results);
-        // Get providers for RU or US region
+        
         const region = language === 'ru-RU' ? 'RU' : 'US';
         setWatchProviders(providersData.results[region] ?? null);
         setSimilar(similarData.results);
@@ -138,7 +138,7 @@ export function useMovieDetail(id: number) {
   return { movie, credits, videos, reviews, watchProviders, similar, loading, error };
 }
 
-// --- Search ---
+
 
 export function useSearch(query: string) {
   const language = useTmdbLanguage();
@@ -165,7 +165,7 @@ export function useSearch(query: string) {
   return { data, loading, error };
 }
 
-// --- Genres ---
+
 
 export function useMovieGenres() {
   const language = useTmdbLanguage();
@@ -181,7 +181,7 @@ export function useMovieGenres() {
   return { data };
 }
 
-// --- Discover ---
+
 
 export function useDiscover(genreIds: string[], filters?: Record<string, string>) {
   const language = useTmdbLanguage();
@@ -207,7 +207,7 @@ export function useDiscover(genreIds: string[], filters?: Record<string, string>
   return { data, loading, error };
 }
 
-// --- Person ---
+
 
 export function usePersonDetail(id: number) {
   const language = useTmdbLanguage();

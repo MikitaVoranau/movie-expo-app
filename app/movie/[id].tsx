@@ -46,7 +46,7 @@ export default function MovieDetailScreen() {
   const { collections, refresh: refreshCollections } = useCollections();
   const [collectionModalVisible, setCollectionModalVisible] = useState(false);
 
-  // Record to watch history when movie loads
+  
   useEffect(() => {
     if (movie) {
       const genreIds = movie.genres?.map((g) => g.id) ?? movie.genre_ids ?? [];
@@ -100,7 +100,7 @@ export default function MovieDetailScreen() {
         style={[styles.screen, { backgroundColor: theme.background }]}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header Image */}
+        {}
         <View style={styles.header}>
           <Image
             source={{ uri: backdropUrl(movie.backdrop_path) }}
@@ -109,7 +109,7 @@ export default function MovieDetailScreen() {
           />
           <GradientOverlay />
 
-          {/* Navigation buttons */}
+          {}
           <Pressable
             onPress={() => router.back()}
             style={[styles.headerButton, styles.backButton, { top: insets.top + Spacing.sm, left: Spacing.md }]}
@@ -151,9 +151,9 @@ export default function MovieDetailScreen() {
           </View>
         </View>
 
-        {/* Content */}
+        {}
         <View style={styles.content}>
-          {/* Title + Rating */}
+          {}
           <View style={styles.titleRow}>
             <View style={styles.titleBlock}>
               <ThemedText type="heading">{movie.title}</ThemedText>
@@ -161,7 +161,7 @@ export default function MovieDetailScreen() {
             <RatingBadge rating={movie.vote_average} />
           </View>
 
-          {/* Action buttons row */}
+          {}
           <View style={styles.actionRow}>
             {trailer && (
               <Pressable style={styles.trailerButton} onPress={openTrailer}>
@@ -180,11 +180,11 @@ export default function MovieDetailScreen() {
             </Pressable>
           </View>
 
-          {/* Synopsis */}
+          {}
           <SectionHeader title={t('movie.synopsis')} />
           <ThemedText style={styles.synopsis}>{movie.overview}</ThemedText>
 
-          {/* Where to Watch */}
+          {}
           {watchProviders && (
             <>
               <SectionHeader title={t('movie.whereToWatch')} />
@@ -212,7 +212,7 @@ export default function MovieDetailScreen() {
             </>
           )}
 
-          {/* Reviews */}
+          {}
           {reviews.length > 0 && (
             <>
               <SectionHeader title={t('movie.reviews')} />
@@ -222,10 +222,10 @@ export default function MovieDetailScreen() {
             </>
           )}
 
-          {/* Similar */}
+          {}
           {similar.length > 0 && (
             <>
-              {/* Info row */}
+              {}
               <View style={styles.infoRow}>
                 <View style={styles.infoChip}>
                   <IconSymbol name="calendar" size={14} color={theme.textSecondary} />
@@ -258,7 +258,7 @@ export default function MovieDetailScreen() {
         </View>
       </ScrollView>
 
-      {/* Collection picker modal */}
+      {}
       <Modal
         visible={collectionModalVisible}
         transparent
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: 'center',
   },
-  // Modal styles
+  
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.6)',

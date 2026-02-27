@@ -38,7 +38,7 @@ export default function PersonDetailScreen() {
       style={[styles.screen, { backgroundColor: theme.background }]}
       showsVerticalScrollIndicator={false}
     >
-      {/* Back button */}
+      {}
       <Pressable
         onPress={() => router.back()}
         style={[styles.backButton, { top: insets.top + Spacing.sm }]}
@@ -46,7 +46,7 @@ export default function PersonDetailScreen() {
         <IconSymbol name="arrow.left" size={22} color={theme.text} />
       </Pressable>
 
-      {/* Person info */}
+      {}
       <View style={[styles.header, { paddingTop: insets.top + 56 }]}>
         <Image
           source={{ uri: profileUrl(person.profile_path, 'w300') }}
@@ -68,7 +68,7 @@ export default function PersonDetailScreen() {
         )}
       </View>
 
-      {/* Biography */}
+      {}
       {person.biography ? (
         <>
           <SectionHeader title={t('person.biography')} />
@@ -76,7 +76,7 @@ export default function PersonDetailScreen() {
         </>
       ) : null}
 
-      {/* Filmography */}
+      {}
       {movies.length > 0 && (
         <>
           <SectionHeader title={t('person.filmography')} />

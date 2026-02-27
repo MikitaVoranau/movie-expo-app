@@ -7,7 +7,7 @@ let db: SQLite.SQLiteDatabase;
 export async function initDatabase(): Promise<void> {
   db = await SQLite.openDatabaseAsync(DATABASE_NAME);
 
-  // Migrate: if old table has CHECK constraint, recreate without it
+  
   const tableInfo = await db.getFirstAsync<{ sql: string }>(
     "SELECT sql FROM sqlite_master WHERE type='table' AND name='user_lists'"
   );
@@ -66,7 +66,7 @@ export async function initDatabase(): Promise<void> {
   `);
 }
 
-// ===== Types =====
+
 
 export interface UserListItem {
   id: number;
@@ -94,7 +94,7 @@ export interface UserCollection {
   created_at: string;
 }
 
-// ===== CRUD: user_lists =====
+
 
 export async function addToList(
   item: Omit<UserListItem, 'id' | 'added_at'>
@@ -170,7 +170,7 @@ export async function getAllListItems(): Promise<UserListItem[]> {
   return db.getAllAsync<UserListItem>('SELECT * FROM user_lists ORDER BY added_at DESC');
 }
 
-// ===== CRUD: user_collections =====
+
 
 export async function createCollection(name: string): Promise<number> {
   const result = await db.runAsync(
@@ -214,7 +214,7 @@ export async function removeFromCollection(collectionId: number, movieId: number
   await removeFromList(movieId, `collection:${collectionId}`);
 }
 
-// ===== Genre Stats =====
+
 
 export async function getWatchedGenreStats(): Promise<{ counts: Record<number, number>; totalMovies: number }> {
   const items = await getListItems('watched');
@@ -230,14 +230,14 @@ export async function getWatchedGenreStats(): Promise<{ counts: Record<number, n
         counts[gid] = (counts[gid] ?? 0) + 1;
       }
     } catch {
-      // skip malformed notes
+      
     }
   }
 
   return { counts, totalMovies };
 }
 
-// ===== CRUD: user_reviews =====
+
 
 export async function addReview(review: Omit<UserReview, 'id' | 'created_at'>): Promise<void> {
   await db.runAsync(

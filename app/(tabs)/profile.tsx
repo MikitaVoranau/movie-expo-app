@@ -81,7 +81,7 @@ export default function ProfileScreen() {
     setGenreStats(stats);
   }, [genres]);
 
-  // Refresh on mount and on focus
+  
   useFocusEffect(
     useCallback(() => {
       const refreshData = async () => {
@@ -93,7 +93,7 @@ export default function ProfileScreen() {
         setFavorites(favs);
         refreshGenreStats();
         
-        // Load posters for collections
+        
         setCollectionPosters({});
         const result: Record<number, (string | undefined)[]> = {};
         const allCollections = await getCollections();
@@ -108,7 +108,7 @@ export default function ProfileScreen() {
     }, [refreshGenreStats])
   );
 
-  // Convert DB items to minimal movie card data
+  
   const toMovieData = (item: { movie_id: number; title: string; poster_url: string | null }) =>
     ({
       id: item.movie_id,
@@ -145,7 +145,7 @@ export default function ProfileScreen() {
     }
   };
 
-  // Build collections data for FlatList
+  
   const collectionsData = [
     {
       key: 'favorites',
@@ -172,7 +172,7 @@ export default function ProfileScreen() {
         contentContainerStyle={{ paddingTop: insets.top + Spacing.md, paddingBottom: Spacing.xl * 2 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Settings button */}
+        {}
         <Pressable
           onPress={() => router.push('/settings')}
           style={[styles.settingsButton, { top: insets.top + Spacing.sm }]}
@@ -180,7 +180,7 @@ export default function ProfileScreen() {
           <IconSymbol name="gear" size={24} color={theme.icon} />
         </Pressable>
 
-        {/* Avatar + Name */}
+        {}
         <View style={styles.header}>
           <View style={[styles.avatarRing, { borderColor: theme.accent }]}>
             {profile.avatarUri ? (
@@ -193,7 +193,7 @@ export default function ProfileScreen() {
           </View>
           <ThemedText type="heading">{profile.username}</ThemedText>
 
-          {/* Stats row */}
+          {}
           <View style={styles.statsRow}>
             <View style={styles.statItem}>
               <ThemedText type="heading" style={styles.statValue}>
@@ -211,7 +211,7 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        {/* Tabs */}
+        {}
         <View style={styles.tabRow}>
           <Pressable
             onPress={() => setActiveTab('watchlist')}
@@ -237,7 +237,7 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
-        {/* List content */}
+        {}
         {activeItems.length > 0 ? (
           <FlatList
             horizontal
@@ -255,7 +255,7 @@ export default function ProfileScreen() {
           </View>
         )}
 
-        {/* Collections */}
+        {}
         <View style={styles.collectionsHeader}>
           <SectionHeader title={t('profile.collections')} />
           <Pressable
@@ -284,7 +284,7 @@ export default function ProfileScreen() {
           showsHorizontalScrollIndicator={false}
         />
 
-        {/* Genre Stats */}
+        {}
         <SectionHeader title={t('profile.stats')} />
         {genreStats.length > 0 ? (
           <GenreStats stats={genreStats} />
@@ -295,7 +295,7 @@ export default function ProfileScreen() {
         )}
       </ScrollView>
 
-      {/* Create collection modal */}
+      {}
       <Modal
         visible={createModalVisible}
         transparent
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: Spacing.md,
   },
-  // Modal styles
+  
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.6)',

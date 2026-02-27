@@ -26,7 +26,7 @@ export default function SearchScreen() {
   const { data: searchResults, loading: searchLoading } = useSearch(debouncedQuery);
   const { data: discoverResults, loading: discoverLoading } = useDiscover(activeGenres);
 
-  // Debounce search
+  
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(query), 500);
     return () => clearTimeout(timer);

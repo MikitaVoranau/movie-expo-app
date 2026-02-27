@@ -1,4 +1,4 @@
-// TMDB API response types
+
 
 export interface TmdbMovie {
   id: number;

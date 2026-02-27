@@ -52,7 +52,7 @@ export default function SettingsScreen() {
     >
       <ThemedText type="title" style={styles.screenTitle}>{t('settings.title')}</ThemedText>
 
-      {/* Theme Selection */}
+      {}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('settings.theme')}
       </ThemedText>
@@ -71,7 +71,7 @@ export default function SettingsScreen() {
         ))}
       </View>
 
-      {/* Language Selection */}
+      {}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('settings.language')}
       </ThemedText>
@@ -90,7 +90,7 @@ export default function SettingsScreen() {
         ))}
       </View>
 
-      {/* Clear History */}
+      {}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('profile.clearHistory')}
       </ThemedText>
