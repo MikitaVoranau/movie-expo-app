@@ -1,0 +1,85 @@
+{
+  "tabs": {
+    "discovery": "Главная",
+    "search": "Поиск",
+    "profile": "Профиль"
+  },
+  "discovery": {
+    "forYou": "Для вас",
+    "trending": "В тренде",
+    "topRated": "Лучшие",
+    "upcoming": "Скоро в кино",
+    "trailer": "Трейлер",
+    "seeAll": "Все"
+  },
+  "search": {
+    "placeholder": "Фильмы, сериалы...",
+    "filters": "Фильтры",
+    "noResults": "Ничего не найдено",
+    "tryAnotherQuery": "Попробуйте другой запрос"
+  },
+  "movie": {
+    "synopsis": "Описание",
+    "cast": "Актёры",
+    "reviews": "Отзывы",
+    "whereToWatch": "Где смотреть",
+    "watchOn": "Смотреть на {{service}}",
+    "similar": "Похожие",
+    "minutes": "мин",
+    "seasons": "сезонов",
+    "episodes": "серий",
+    "readMore": "Ещё",
+    "readLess": "Свернуть",
+    "addToCollection": "Добавить в коллекцию",
+    "selectCollection": "Выберите коллекцию",
+    "noCollections": "Коллекций пока нет"
+  },
+  "person": {
+    "biography": "Биография",
+    "filmography": "Фильмография",
+    "bornOn": "Дата рождения: {{date}}",
+    "birthPlace": "Место рождения: {{place}}"
+  },
+  "profile": {
+    "willWatch": "Буду смотреть",
+    "history": "История",
+    "favorites": "Избранное",
+    "hoursWatched": "часов просмотрено",
+    "filmsWatched": "фильмов просмотрено",
+    "collections": "Коллекции",
+    "stats": "Статистика жанров",
+    "reviews": "Мои отзывы",
+    "emptyWatchlist": "Список пуст",
+    "emptyHistory": "Нет истории просмотров",
+    "browseMovies": "Смотреть фильмы",
+    "newCollection": "Новая коллекция",
+    "collectionName": "Название коллекции",
+    "create": "Создать",
+    "deleteCollection": "Удалить коллекцию",
+    "deleteConfirm": "Удалить \"{{name}}\"?",
+    "noGenreStats": "Посмотрите фильмы, чтобы увидеть статистику",
+    "clearHistory": "Очистить историю",
+    "clearHistoryConfirm": "Вы уверены, что хотите очистить историю просмотров?",
+    "clear": "Очистить"
+  },
+  "settings": {
+    "title": "Настройки",
+    "theme": "Тема",
+    "language": "Язык",
+    "dark": "Тёмная",
+    "light": "Светлая",
+    "system": "Системная"
+  },
+  "common": {
+    "rating": "Рейтинг",
+    "year": "Год",
+    "genre": "Жанр",
+    "country": "Страна",
+    "cancel": "Отмена",
+    "apply": "Применить",
+    "loading": "Загрузка...",
+    "error": "Что-то пошло не так",
+    "retry": "Повторить",
+    "back": "Назад"
+  }
+}

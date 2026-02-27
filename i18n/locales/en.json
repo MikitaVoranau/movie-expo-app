@@ -1,0 +1,85 @@
+{
+  "tabs": {
+    "discovery": "Discovery",
+    "search": "Search",
+    "profile": "Profile"
+  },
+  "discovery": {
+    "forYou": "For You",
+    "trending": "Trending",
+    "topRated": "Top Rated",
+    "upcoming": "Coming Soon",
+    "trailer": "Trailer",
+    "seeAll": "See All"
+  },
+  "search": {
+    "placeholder": "Search movies, series...",
+    "filters": "Filters",
+    "noResults": "No results found",
+    "tryAnotherQuery": "Try a different search term"
+  },
+  "movie": {
+    "synopsis": "Synopsis",
+    "cast": "Cast",
+    "reviews": "Reviews",
+    "whereToWatch": "Where to Watch",
+    "watchOn": "Watch on {{service}}",
+    "similar": "Similar",
+    "minutes": "min",
+    "seasons": "seasons",
+    "episodes": "episodes",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "addToCollection": "Add to Collection",
+    "selectCollection": "Select Collection",
+    "noCollections": "No collections yet"
+  },
+  "person": {
+    "biography": "Biography",
+    "filmography": "Filmography",
+    "bornOn": "Born: {{date}}",
+    "birthPlace": "Birthplace: {{place}}"
+  },
+  "profile": {
+    "willWatch": "Will Watch",
+    "history": "History",
+    "favorites": "Favorites",
+    "hoursWatched": "hours watched",
+    "filmsWatched": "films watched",
+    "collections": "Collections",
+    "stats": "Genre Stats",
+    "reviews": "My Reviews",
+    "emptyWatchlist": "Your watchlist is empty",
+    "emptyHistory": "No watch history yet",
+    "browseMovies": "Browse movies",
+    "newCollection": "New Collection",
+    "collectionName": "Collection name",
+    "create": "Create",
+    "deleteCollection": "Delete Collection",
+    "deleteConfirm": "Delete \"{{name}}\"?",
+    "noGenreStats": "Watch some movies to see your genre stats",
+    "clearHistory": "Clear History",
+    "clearHistoryConfirm": "Are you sure you want to clear your watch history?",
+    "clear": "Clear"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System"
+  },
+  "common": {
+    "rating": "Rating",
+    "year": "Year",
+    "genre": "Genre",
+    "country": "Country",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "back": "Back"
+  }
+}
