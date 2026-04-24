@@ -47,17 +47,6 @@ export async function initDatabase(): Promise<void> {
   }
 
   await db.execAsync(`
-    CREATE TABLE IF NOT EXISTS user_reviews (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      movie_id INTEGER NOT NULL UNIQUE,
-      title TEXT NOT NULL,
-      rating REAL NOT NULL,
-      content TEXT,
-      created_at TEXT NOT NULL DEFAULT (datetime('now'))
-    );
-  `);
-
-  await db.execAsync(`
     CREATE TABLE IF NOT EXISTS user_collections (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL UNIQUE,
@@ -77,15 +66,6 @@ export interface UserListItem {
   added_at: string;
   rating: number | null;
   notes: string | null;
-}
-
-export interface UserReview {
-  id: number;
-  movie_id: number;
-  title: string;
-  rating: number;
-  content: string | null;
-  created_at: string;
 }
 
 export interface UserCollection {
@@ -111,16 +91,6 @@ export async function getListItems(listType: string): Promise<UserListItem[]> {
     'SELECT * FROM user_lists WHERE list_type = ? ORDER BY added_at DESC',
     [listType]
   );
-}
-
-export async function updateWatchedMovieGenreIds(movieId: number, genreIds: number[]): Promise<void> {
-  const items = await getListItems('watched');
-  const item = items.find((i) => i.movie_id === movieId);
-  if (item) {
-    const newNotes = JSON.stringify({ genre_ids: genreIds });
-    await db.runAsync('UPDATE user_lists SET notes = ? WHERE movie_id = ? AND list_type = ?', 
-      [newNotes, movieId, 'watched']);
-  }
 }
 
 export async function isInList(movieId: number, listType: string): Promise<boolean> {
@@ -165,12 +135,6 @@ export async function getListCounts(): Promise<Record<string, number>> {
   );
   return Object.fromEntries(rows.map((r) => [r.list_type, r.count]));
 }
-
-export async function getAllListItems(): Promise<UserListItem[]> {
-  return db.getAllAsync<UserListItem>('SELECT * FROM user_lists ORDER BY added_at DESC');
-}
-
-
 
 export async function createCollection(name: string): Promise<number> {
   const result = await db.runAsync(
@@ -235,24 +199,6 @@ export async function getWatchedGenreStats(): Promise<{ counts: Record<number, n
   }
 
   return { counts, totalMovies };
-}
-
-
-
-export async function addReview(review: Omit<UserReview, 'id' | 'created_at'>): Promise<void> {
-  await db.runAsync(
-    `INSERT OR REPLACE INTO user_reviews (movie_id, title, rating, content)
-     VALUES (?, ?, ?, ?)`,
-    [review.movie_id, review.title, review.rating, review.content]
-  );
-}
-
-export async function getReviews(): Promise<UserReview[]> {
-  return db.getAllAsync<UserReview>('SELECT * FROM user_reviews ORDER BY created_at DESC');
-}
-
-export async function deleteReview(movieId: number): Promise<void> {
-  await db.runAsync('DELETE FROM user_reviews WHERE movie_id = ?', [movieId]);
 }
 
 export async function clearWatchedHistory(): Promise<void> {

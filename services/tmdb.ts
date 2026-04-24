@@ -1,13 +1,13 @@
 import type {
-  TmdbCredits,
-  TmdbGenre,
-  TmdbMovie,
-  TmdbMovieDetail,
-  TmdbPaginatedResponse,
-  TmdbPersonDetail,
-  TmdbReview,
-  TmdbVideo,
-  TmdbWatchProviderResult,
+    TmdbCredits,
+    TmdbGenre,
+    TmdbMovie,
+    TmdbMovieDetail,
+    TmdbPaginatedResponse,
+    TmdbPersonDetail,
+    TmdbReview,
+    TmdbVideo,
+    TmdbWatchProviderResult,
 } from './types';
 
 
@@ -52,9 +52,6 @@ export const tmdb = {
 
   getTopRated: (page = 1, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/movie/top_rated', { page: String(page), language }),
-
-  getNowPlaying: (page = 1, language = 'en-US') =>
-    tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/movie/now_playing', { page: String(page), language }),
 
   getUpcoming: (page = 1, language = 'en-US') =>
     tmdbFetch<TmdbPaginatedResponse<TmdbMovie>>('/movie/upcoming', { page: String(page), language }),

@@ -1,18 +1,18 @@
 import { Image } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-  ActivityIndicator,
-  FlatList,
-  Linking,
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
+    ActivityIndicator,
+    FlatList,
+    Linking,
+    Modal,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
 
 import { GradientOverlay } from '@/components/gradient-overlay';
 import { MovieCard } from '@/components/movie-card';
@@ -22,10 +22,10 @@ import { SectionHeader } from '@/components/section-header';
 import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { BorderRadius, Colors, Spacing } from '@/constants/theme';
+import { addToCollection, addToList } from '@/db/database';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useIsInList, useCollections } from '@/hooks/use-database';
+import { useCollections, useIsInList } from '@/hooks/use-database';
 import { useMovieDetail } from '@/hooks/use-tmdb';
-import { addToList, addToCollection } from '@/db/database';
 import { backdropUrl, posterUrl } from '@/services/tmdb';
 
 const HEADER_HEIGHT = 350;
@@ -38,7 +38,7 @@ export default function MovieDetailScreen() {
   const insets = useSafeAreaInsets();
   const theme = Colors[colorScheme];
 
-  const { movie, credits, videos, reviews, watchProviders, similar, loading } = useMovieDetail(
+  const { movie, videos, reviews, watchProviders, similar, loading } = useMovieDetail(
     Number(id)
   );
   const { inList: isBookmarked, toggle: toggleBookmark } = useIsInList(Number(id), 'watchlist');
@@ -46,7 +46,7 @@ export default function MovieDetailScreen() {
   const { collections, refresh: refreshCollections } = useCollections();
   const [collectionModalVisible, setCollectionModalVisible] = useState(false);
 
-  
+
   useEffect(() => {
     if (movie) {
       const genreIds = movie.genres?.map((g) => g.id) ?? movie.genre_ids ?? [];
@@ -347,10 +347,6 @@ const styles = StyleSheet.create({
   },
   titleBlock: {
     flex: 1,
-  },
-  tagline: {
-    fontStyle: 'italic',
-    marginTop: 4,
   },
   infoRow: {
     flexDirection: 'row',

@@ -28,20 +28,6 @@ export interface TmdbMovieDetail extends TmdbMovie {
   production_companies: { id: number; name: string; logo_path: string | null }[];
 }
 
-export interface TmdbTvSeries {
-  id: number;
-  name: string;
-  original_name: string;
-  overview: string;
-  poster_path: string | null;
-  backdrop_path: string | null;
-  first_air_date: string;
-  vote_average: number;
-  vote_count: number;
-  genre_ids: number[];
-  popularity: number;
-}
-
 export interface TmdbCastMember {
   id: number;
   name: string;

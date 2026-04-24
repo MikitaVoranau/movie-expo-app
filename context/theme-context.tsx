@@ -42,7 +42,7 @@ export function ThemeProvider({ children }: PropsWithChildren) {
     themeMode === 'system' ? (systemScheme ?? 'dark') : themeMode;
 
   if (!isLoaded) return null;
-
+  
   return (
     <ThemeContext.Provider value={{ themeMode, colorScheme, setThemeMode }}>
       {children}

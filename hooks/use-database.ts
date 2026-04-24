@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
 import {
   addToList,
-  removeFromList,
-  getListItems,
-  getListCounts,
-  isInList,
-  getCollections,
   createCollection,
   deleteCollection,
-  getCollectionItems,
-  type UserListItem,
+  getCollections,
+  getListCounts,
+  getListItems,
+  isInList,
+  removeFromList,
   type UserCollection,
+  type UserListItem
 } from '@/db/database';
+import { useEffect, useState } from 'react';
 
 export function useListItems(listType: string) {
   const [items, setItems] = useState<UserListItem[]>([]);
@@ -101,24 +100,4 @@ export function useCollections() {
   };
 
   return { collections, loading, refresh, create, remove };
-}
-
-export function useCollectionItems(collectionId: number) {
-  const [items, setItems] = useState<UserListItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const refresh = async () => {
-    setLoading(true);
-    const data = await getCollectionItems(collectionId);
-    setItems(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (collectionId) {
-      refresh();
-    }
-  }, [collectionId]);
-
-  return { items, loading, refresh };
 }

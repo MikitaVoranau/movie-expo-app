@@ -1,20 +1,19 @@
 import { Image } from 'expo-image';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-  Alert,
-  FlatList,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  Modal,
-  View,
+    Alert,
+    FlatList,
+    Modal,
+    Platform,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
-import { useFocusEffect } from 'expo-router';
 
 import { GenreStats } from '@/components/genre-stats';
 import { ListCard } from '@/components/list-card';
@@ -24,9 +23,9 @@ import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { BorderRadius, Colors, Spacing } from '@/constants/theme';
 import { useUserProfile } from '@/context/auth-context';
+import { getCollectionItems, getCollections, getListItems, getWatchedGenreStats } from '@/db/database';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useListItems, useListCounts, useCollections } from '@/hooks/use-database';
-import { getListItems, getWatchedGenreStats, getCollectionItems, getCollections } from '@/db/database';
+import { useCollections, useListCounts, useListItems } from '@/hooks/use-database';
 import { useMovieGenres } from '@/hooks/use-tmdb';
 import type { TmdbMovie } from '@/services/types';
 
@@ -464,12 +463,5 @@ const styles = StyleSheet.create({
   modalButtonPrimary: {
     minWidth: 80,
     alignItems: 'center',
-  },
-  clearButton: {
-    alignSelf: 'center',
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.sm,
-    marginBottom: Spacing.sm,
   },
 });

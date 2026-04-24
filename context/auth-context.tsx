@@ -12,7 +12,7 @@ interface AuthContextType {
 }
 
 const defaultProfile: UserProfile = {
-  username: 'Cinephile',
+  username: 'Mikita',
   avatarUri: null,
 };
 

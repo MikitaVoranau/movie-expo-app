@@ -4,11 +4,11 @@ import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
-import '@/i18n';
 import { Colors } from '@/constants/theme';
 import { AuthProvider } from '@/context/auth-context';
 import { ThemeContext, ThemeProvider } from '@/context/theme-context';
 import { initDatabase } from '@/db/database';
+import '@/i18n';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -77,10 +77,8 @@ function RootNavigation() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="movie/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="person/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="collection/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="settings" options={{ presentation: 'modal', title: 'Settings' }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
     </NavigationThemeProvider>
