@@ -80,6 +80,9 @@
     "loading": "Loading...",
     "error": "Something went wrong",
     "retry": "Retry",
-    "back": "Back"
+    "back": "Back",
+    "offline": "No internet connection — showing cached data",
+    "noConnection": "Check your internet connection",
+    "goBack": "Go back"
   }
 }

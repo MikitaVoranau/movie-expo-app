@@ -3,14 +3,14 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-    ActivityIndicator,
-    FlatList,
-    Linking,
-    Modal,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    View,
+  ActivityIndicator,
+  FlatList,
+  Linking,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -22,6 +22,7 @@ import { SectionHeader } from '@/components/section-header';
 import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { BorderRadius, Colors, Spacing } from '@/constants/theme';
+import { useNetwork } from '@/context/network-context';
 import { addToCollection, addToList } from '@/db/database';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCollections, useIsInList } from '@/hooks/use-database';
@@ -38,9 +39,10 @@ export default function MovieDetailScreen() {
   const insets = useSafeAreaInsets();
   const theme = Colors[colorScheme];
 
-  const { movie, videos, reviews, watchProviders, similar, loading } = useMovieDetail(
+  const { movie, videos, reviews, watchProviders, similar, loading, error } = useMovieDetail(
     Number(id)
   );
+  const { isConnected } = useNetwork();
   const { inList: isBookmarked, toggle: toggleBookmark } = useIsInList(Number(id), 'watchlist');
   const { inList: isLiked, toggle: toggleLike } = useIsInList(Number(id), 'favorites');
   const { collections, refresh: refreshCollections } = useCollections();
@@ -65,6 +67,24 @@ export default function MovieDetailScreen() {
   }, [movie?.id, movie?.genres]);
 
   if (loading || !movie) {
+    if (!isConnected && !loading) {
+      return (
+        <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
+          <IconSymbol name="wifi.slash" size={56} color={theme.textMuted} />
+          <ThemedText type="subtitle" style={{ marginTop: Spacing.md, textAlign: 'center' }}>
+            {t('common.noConnection')}
+          </ThemedText>
+          <Pressable
+            onPress={() => router.back()}
+            style={[styles.backBtn, { backgroundColor: theme.accent }]}
+          >
+            <ThemedText type="defaultSemiBold" style={{ color: '#fff' }}>
+              {t('common.goBack')}
+            </ThemedText>
+          </Pressable>
+        </View>
+      );
+    }
     return (
       <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
         <ActivityIndicator size="large" color={theme.accent} />
@@ -100,7 +120,6 @@ export default function MovieDetailScreen() {
         style={[styles.screen, { backgroundColor: theme.background }]}
         showsVerticalScrollIndicator={false}
       >
-        {}
         <View style={styles.header}>
           <Image
             source={{ uri: backdropUrl(movie.backdrop_path) }}
@@ -109,7 +128,6 @@ export default function MovieDetailScreen() {
           />
           <GradientOverlay />
 
-          {}
           <Pressable
             onPress={() => router.back()}
             style={[styles.headerButton, styles.backButton, { top: insets.top + Spacing.sm, left: Spacing.md }]}
@@ -151,9 +169,7 @@ export default function MovieDetailScreen() {
           </View>
         </View>
 
-        {}
         <View style={styles.content}>
-          {}
           <View style={styles.titleRow}>
             <View style={styles.titleBlock}>
               <ThemedText type="heading">{movie.title}</ThemedText>
@@ -161,7 +177,6 @@ export default function MovieDetailScreen() {
             <RatingBadge rating={movie.vote_average} />
           </View>
 
-          {}
           <View style={styles.actionRow}>
             {trailer && (
               <Pressable style={styles.trailerButton} onPress={openTrailer}>
@@ -180,11 +195,9 @@ export default function MovieDetailScreen() {
             </Pressable>
           </View>
 
-          {}
           <SectionHeader title={t('movie.synopsis')} />
           <ThemedText style={styles.synopsis}>{movie.overview}</ThemedText>
 
-          {}
           {watchProviders && (
             <>
               <SectionHeader title={t('movie.whereToWatch')} />
@@ -212,7 +225,6 @@ export default function MovieDetailScreen() {
             </>
           )}
 
-          {}
           {reviews.length > 0 && (
             <>
               <SectionHeader title={t('movie.reviews')} />
@@ -222,10 +234,8 @@ export default function MovieDetailScreen() {
             </>
           )}
 
-          {}
           {similar.length > 0 && (
             <>
-              {}
               <View style={styles.infoRow}>
                 <View style={styles.infoChip}>
                   <IconSymbol name="calendar" size={14} color={theme.textSecondary} />
@@ -258,7 +268,6 @@ export default function MovieDetailScreen() {
         </View>
       </ScrollView>
 
-      {}
       <Modal
         visible={collectionModalVisible}
         transparent
@@ -315,6 +324,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  backBtn: {
+    marginTop: Spacing.lg,
+    paddingHorizontal: Spacing.xl,
+    paddingVertical: Spacing.sm + 4,
+    borderRadius: 24,
   },
   header: {
     height: HEADER_HEIGHT,

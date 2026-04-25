@@ -6,6 +6,7 @@ import 'react-native-reanimated';
 
 import { Colors } from '@/constants/theme';
 import { AuthProvider } from '@/context/auth-context';
+import { NetworkProvider } from '@/context/network-context';
 import { ThemeContext, ThemeProvider } from '@/context/theme-context';
 import { initDatabase } from '@/db/database';
 import '@/i18n';
@@ -60,11 +61,13 @@ export default function RootLayout() {
   if (!dbReady) return null;
 
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <RootNavigation />
-      </AuthProvider>
-    </ThemeProvider>
+    <NetworkProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <RootNavigation />
+        </AuthProvider>
+      </ThemeProvider>
+    </NetworkProvider>
   );
 }
 

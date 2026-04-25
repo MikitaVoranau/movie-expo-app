@@ -1,12 +1,13 @@
+import { useTranslation } from 'react-i18next';
 import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
 
 import { MovieCard } from '@/components/movie-card';
 import { ThemedText } from '@/components/themed-text';
 import { Colors, Spacing } from '@/constants/theme';
+import { useNetwork } from '@/context/network-context';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useTrending, usePopular, useTopRated, useUpcoming } from '@/hooks/use-tmdb';
+import { usePopular, useTopRated, useTrending, useUpcoming } from '@/hooks/use-tmdb';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const COLUMN_GAP = Spacing.sm;
@@ -17,6 +18,7 @@ export default function DiscoveryScreen() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
   const theme = Colors[colorScheme];
+  const { isConnected } = useNetwork();
 
   const { data: trending, loading: trendingLoading } = useTrending();
   const { data: popular } = usePopular();
@@ -30,6 +32,13 @@ export default function DiscoveryScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background, paddingTop: insets.top }]}>
+      {!isConnected && (
+        <View style={[styles.offlineBanner, { backgroundColor: theme.surface }]}>
+          <ThemedText type="caption" style={{ color: theme.accentGold }}>
+            {t('common.offline')}
+          </ThemedText>
+        </View>
+      )}
       {trendingLoading && (
         <View style={styles.loadingContainer}>
           <ThemedText type="caption">{t('common.loading')}</ThemedText>
@@ -56,6 +65,13 @@ const styles = StyleSheet.create({
   loadingContainer: {
     alignItems: 'center',
     paddingVertical: Spacing.xl,
+  },
+  offlineBanner: {
+    alignItems: 'center',
+    paddingVertical: Spacing.sm,
+    marginHorizontal: Spacing.md,
+    marginBottom: Spacing.sm,
+    borderRadius: 8,
   },
   listContent: {
     paddingHorizontal: Spacing.md,

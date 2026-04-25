@@ -1,14 +1,14 @@
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
 
 import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { BorderRadius, Colors, Spacing } from '@/constants/theme';
 import { ThemeContext, type ThemeMode } from '@/context/theme-context';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { clearWatchedHistory } from '@/db/database';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
@@ -52,7 +52,6 @@ export default function SettingsScreen() {
     >
       <ThemedText type="title" style={styles.screenTitle}>{t('settings.title')}</ThemedText>
 
-      {}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('settings.theme')}
       </ThemedText>
@@ -71,7 +70,6 @@ export default function SettingsScreen() {
         ))}
       </View>
 
-      {}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('settings.language')}
       </ThemedText>
@@ -90,7 +88,6 @@ export default function SettingsScreen() {
         ))}
       </View>
 
-      {}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('profile.clearHistory')}
       </ThemedText>

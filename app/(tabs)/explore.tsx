@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
 
 import { FilterChips } from '@/components/filter-chips';
 import { MovieGrid } from '@/components/movie-grid';
@@ -10,7 +10,7 @@ import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useSearch, useMovieGenres, useDiscover } from '@/hooks/use-tmdb';
+import { useDiscover, useMovieGenres, useSearch } from '@/hooks/use-tmdb';
 
 export default function SearchScreen() {
   const { t } = useTranslation();
@@ -26,7 +26,6 @@ export default function SearchScreen() {
   const { data: searchResults, loading: searchLoading } = useSearch(debouncedQuery);
   const { data: discoverResults, loading: discoverLoading } = useDiscover(activeGenres);
 
-  
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(query), 500);
     return () => clearTimeout(timer);

@@ -80,7 +80,6 @@ export default function ProfileScreen() {
     setGenreStats(stats);
   }, [genres]);
 
-  
   useFocusEffect(
     useCallback(() => {
       const refreshData = async () => {
@@ -91,8 +90,7 @@ export default function ProfileScreen() {
         const favs = await getListItems('favorites');
         setFavorites(favs);
         refreshGenreStats();
-        
-        
+
         setCollectionPosters({});
         const result: Record<number, (string | undefined)[]> = {};
         const allCollections = await getCollections();
@@ -107,7 +105,6 @@ export default function ProfileScreen() {
     }, [refreshGenreStats])
   );
 
-  
   const toMovieData = (item: { movie_id: number; title: string; poster_url: string | null }) =>
     ({
       id: item.movie_id,
@@ -144,7 +141,6 @@ export default function ProfileScreen() {
     }
   };
 
-  
   const collectionsData = [
     {
       key: 'favorites',
@@ -171,7 +167,6 @@ export default function ProfileScreen() {
         contentContainerStyle={{ paddingTop: insets.top + Spacing.md, paddingBottom: Spacing.xl * 2 }}
         showsVerticalScrollIndicator={false}
       >
-        {}
         <Pressable
           onPress={() => router.push('/settings')}
           style={[styles.settingsButton, { top: insets.top + Spacing.sm }]}
@@ -179,7 +174,6 @@ export default function ProfileScreen() {
           <IconSymbol name="gear" size={24} color={theme.icon} />
         </Pressable>
 
-        {}
         <View style={styles.header}>
           <View style={[styles.avatarRing, { borderColor: theme.accent }]}>
             {profile.avatarUri ? (
@@ -192,7 +186,6 @@ export default function ProfileScreen() {
           </View>
           <ThemedText type="heading">{profile.username}</ThemedText>
 
-          {}
           <View style={styles.statsRow}>
             <View style={styles.statItem}>
               <ThemedText type="heading" style={styles.statValue}>
@@ -210,7 +203,6 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        {}
         <View style={styles.tabRow}>
           <Pressable
             onPress={() => setActiveTab('watchlist')}
@@ -236,7 +228,6 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
-        {}
         {activeItems.length > 0 ? (
           <FlatList
             horizontal
@@ -254,7 +245,6 @@ export default function ProfileScreen() {
           </View>
         )}
 
-        {}
         <View style={styles.collectionsHeader}>
           <SectionHeader title={t('profile.collections')} />
           <Pressable
@@ -283,7 +273,6 @@ export default function ProfileScreen() {
           showsHorizontalScrollIndicator={false}
         />
 
-        {}
         <SectionHeader title={t('profile.stats')} />
         {genreStats.length > 0 ? (
           <GenreStats stats={genreStats} />
@@ -294,7 +283,6 @@ export default function ProfileScreen() {
         )}
       </ScrollView>
 
-      {}
       <Modal
         visible={createModalVisible}
         transparent

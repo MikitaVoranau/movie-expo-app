@@ -7,7 +7,6 @@ let db: SQLite.SQLiteDatabase;
 export async function initDatabase(): Promise<void> {
   db = await SQLite.openDatabaseAsync(DATABASE_NAME);
 
-  
   const tableInfo = await db.getFirstAsync<{ sql: string }>(
     "SELECT sql FROM sqlite_master WHERE type='table' AND name='user_lists'"
   );
@@ -53,10 +52,43 @@ export async function initDatabase(): Promise<void> {
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
   `);
+
+  await db.execAsync(`
+    CREATE TABLE IF NOT EXISTS api_cache (
+      cache_key TEXT PRIMARY KEY,
+      data TEXT NOT NULL,
+      cached_at INTEGER NOT NULL
+    );
+  `);
 }
 
+const CACHE_TTL_MS = 60 * 60 * 1000;
 
+export async function getCached<T>(key: string): Promise<T | null> {
+  const row = await db.getFirstAsync<{ data: string; cached_at: number }>(
+    'SELECT data, cached_at FROM api_cache WHERE cache_key = ?',
+    [key]
+  );
+  if (!row) return null;
+  const age = Date.now() - row.cached_at;
+  if (age > CACHE_TTL_MS) return null;
+  try {
+    return JSON.parse(row.data) as T;
+  } catch {
+    return null;
+  }
+}
 
+export async function setCached(key: string, data: unknown): Promise<void> {
+  await db.runAsync(
+    'INSERT OR REPLACE INTO api_cache (cache_key, data, cached_at) VALUES (?, ?, ?)',
+    [key, JSON.stringify(data), Date.now()]
+  );
+}
+
+export async function clearCache(): Promise<void> {
+  await db.runAsync('DELETE FROM api_cache');
+}
 export interface UserListItem {
   id: number;
   movie_id: number;
@@ -73,8 +105,6 @@ export interface UserCollection {
   name: string;
   created_at: string;
 }
-
-
 
 export async function addToList(
   item: Omit<UserListItem, 'id' | 'added_at'>
@@ -178,8 +208,6 @@ export async function removeFromCollection(collectionId: number, movieId: number
   await removeFromList(movieId, `collection:${collectionId}`);
 }
 
-
-
 export async function getWatchedGenreStats(): Promise<{ counts: Record<number, number>; totalMovies: number }> {
   const items = await getListItems('watched');
   const counts: Record<number, number> = {};
@@ -194,7 +222,6 @@ export async function getWatchedGenreStats(): Promise<{ counts: Record<number, n
         counts[gid] = (counts[gid] ?? 0) + 1;
       }
     } catch {
-      
     }
   }
 
