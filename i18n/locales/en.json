@@ -16,7 +16,17 @@
     "placeholder": "Search movies, series...",
     "filters": "Filters",
     "noResults": "No results found",
-    "tryAnotherQuery": "Try a different search term"
+    "tryAnotherQuery": "Try a different search term",
+    "sortBy": "Sort by",
+    "sortPopularity": "Popular",
+    "sortRating": "Top Rated",
+    "sortNewest": "Newest",
+    "sortOldest": "Oldest",
+    "filterYear": "Year",
+    "anyYear": "Any",
+    "filterRating": "Min Rating",
+    "anyRating": "Any",
+    "resetFilters": "Reset filters"
   },
   "movie": {
     "synopsis": "Synopsis",
@@ -68,7 +78,30 @@
     "language": "Language",
     "dark": "Dark",
     "light": "Light",
-    "system": "System"
+    "system": "System",
+    "notifications": "Notifications",
+    "weeklyReminder": "Weekly Reminder",
+    "weeklyReminderDesc": "Every Saturday — time to watch something",
+    "notifTime": "Reminder time",
+    "data": "Data",
+    "clearCache": "Clear Cache",
+    "clearCacheConfirm": "This will remove all cached movie data. Are you sure?",
+    "profile": "Profile",
+    "changeAvatar": "Change Avatar",
+    "edit": "Edit",
+    "cloud": "Cloud Sync",
+    "syncNow": "Sync to Cloud",
+    "permissionDenied": "Permission denied",
+    "galleryPermission": "Please allow access to your photo library.",
+    "uploadFailed": "Failed to upload image.",
+    "testNotif": "Send test notification",
+    "testNotifSent": "Notification will appear in 5 seconds. Close the app!"
+  },
+  "notifications": {
+    "reminderTitle": "Time to watch! 🎬",
+    "reminderBody": "You have movies waiting in your watchlist.",
+    "permissionDeniedTitle": "Permission denied",
+    "permissionDeniedBody": "Please enable notifications in your device settings."
   },
   "common": {
     "rating": "Rating",
@@ -83,6 +116,7 @@
     "back": "Back",
     "offline": "No internet connection — showing cached data",
     "noConnection": "Check your internet connection",
-    "goBack": "Go back"
+    "goBack": "Go back",
+    "save": "Save"
   }
 }
