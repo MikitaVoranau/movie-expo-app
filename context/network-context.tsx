@@ -1,53 +1,47 @@
-import { createContext, useContext, useEffect, useRef, useState, type PropsWithChildren } from 'react';
-import { AppState, type AppStateStatus } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import { createContext, useContext, useEffect, useState, type PropsWithChildren } from 'react';
 
 interface NetworkContextType {
   isConnected: boolean;
   isChecking: boolean;
+  connectionType: string | null;
 }
 
 const NetworkContext = createContext<NetworkContextType>({
   isConnected: true,
   isChecking: false,
+  connectionType: null,
 });
 
-async function checkConnection(): Promise<boolean> {
-  try {
-    const response = await fetch('https://api.themoviedb.org/3/configuration', {
-      method: 'HEAD',
-    });
-    return response.ok || response.status < 500;
-  } catch {
-    return false;
-  }
-}
-
 export function NetworkProvider({ children }: PropsWithChildren) {
+  // Временно всегда считаем что интернет есть
   const [isConnected, setIsConnected] = useState(true);
-  const [isChecking, setIsChecking] = useState(true);
-  const appState = useRef(AppState.currentState);
-
-  const check = async () => {
-    const result = await checkConnection();
-    setIsConnected(result);
-    setIsChecking(false);
-  };
+  const [isChecking, setIsChecking] = useState(false);
+  const [connectionType, setConnectionType] = useState<string | null>('wifi');
 
   useEffect(() => {
-    check();
-
-    const subscription = AppState.addEventListener('change', (nextState: AppStateStatus) => {
-      if (appState.current.match(/inactive|background/) && nextState === 'active') {
-        check();
-      }
-      appState.current = nextState;
+    const unsubscribe = NetInfo.addEventListener(state => {
+      // Игнорируем false, только если действительно нет подключения
+      const connected = state.isConnected ?? true;
+      console.log('Network state:', state);
+      setIsConnected(connected);
+      setConnectionType(state.type);
+      setIsChecking(false);
     });
 
-    return () => subscription.remove();
+    NetInfo.fetch().then(state => {
+      const connected = state.isConnected ?? true;
+      console.log('Initial network state:', state);
+      setIsConnected(connected);
+      setConnectionType(state.type);
+      setIsChecking(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   return (
-    <NetworkContext.Provider value={{ isConnected, isChecking }}>
+    <NetworkContext.Provider value={{ isConnected, isChecking, connectionType }}>
       {children}
     </NetworkContext.Provider>
   );

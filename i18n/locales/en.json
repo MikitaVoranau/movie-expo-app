@@ -4,6 +4,26 @@
     "search": "Search",
     "profile": "Profile"
   },
+  "auth": {
+    "welcome": "Welcome Back",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "createAccount": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "••••••••",
+    "noAccount": "Don't have an account? ",
+    "haveAccount": "Already have an account? ",
+    "signUpLink": "Sign up",
+    "signInLink": "Sign in",
+    "fillAllFields": "Please fill in all fields",
+    "authFailed": "Authentication failed",
+    "signInSuccess": "Signed in successfully!",
+    "signUpSuccess": "Account created!",
+    "description": "Your personal movie collection manager",
+    "syncDescription": "Sign in to sync your movie collection across all your devices"
+  },
   "discovery": {
     "forYou": "For You",
     "trending": "Trending",

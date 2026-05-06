@@ -3,14 +3,15 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  ActivityIndicator,
-  FlatList,
-  Linking,
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
+    ActivityIndicator,
+    Alert,
+    FlatList,
+    Linking,
+    Modal,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -27,6 +28,7 @@ import { addToCollection, addToList } from '@/db/database';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCollections, useIsInList } from '@/hooks/use-database';
 import { useMovieDetail } from '@/hooks/use-tmdb';
+import { shareMovieUniversal } from '@/services/social-sharing';
 import { backdropUrl, posterUrl } from '@/services/tmdb';
 
 const HEADER_HEIGHT = 350;
@@ -47,6 +49,14 @@ export default function MovieDetailScreen() {
   const { inList: isLiked, toggle: toggleLike } = useIsInList(Number(id), 'favorites');
   const { collections, refresh: refreshCollections } = useCollections();
   const [collectionModalVisible, setCollectionModalVisible] = useState(false);
+
+  const handleShare = async () => {
+    if (!movie) return;
+    const success = await shareMovieUniversal(movie);
+    if (!success) {
+      Alert.alert('Error', 'Could not share movie');
+    }
+  };
 
 
   useEffect(() => {
@@ -190,9 +200,32 @@ export default function MovieDetailScreen() {
               style={[styles.collectionButton, { backgroundColor: theme.surface }]}
               onPress={handleAddToCollection}
             >
-              <IconSymbol name="plus" size={18} color={theme.text} />
+              <IconSymbol name="plus" size={18} color={theme.icon} />
               <ThemedText type="badge">{t('movie.addToCollection')}</ThemedText>
             </Pressable>
+            <Pressable
+              style={[styles.shareButton, { backgroundColor: theme.surface }]}
+              onPress={handleShare}
+            >
+              <IconSymbol name="square.and.arrow.up" size={18} color={theme.icon} />
+            </Pressable>
+          </View>
+
+          <View style={styles.infoRow}>
+            <View style={styles.infoChip}>
+              <IconSymbol name="calendar" size={14} color={theme.textSecondary} />
+              <ThemedText type="caption">{movie.release_date?.slice(0, 4)}</ThemedText>
+            </View>
+            <View style={styles.infoChip}>
+              <IconSymbol name="clock" size={14} color={theme.textSecondary} />
+              <ThemedText type="caption">{movie.runtime} {t('movie.minutes')}</ThemedText>
+            </View>
+            {movie.genres[0] && (
+              <View style={styles.infoChip}>
+                <IconSymbol name="film" size={14} color={theme.textSecondary} />
+                <ThemedText type="caption">{movie.genres[0].name}</ThemedText>
+              </View>
+            )}
           </View>
 
           <SectionHeader title={t('movie.synopsis')} />
@@ -236,22 +269,6 @@ export default function MovieDetailScreen() {
 
           {similar.length > 0 && (
             <>
-              <View style={styles.infoRow}>
-                <View style={styles.infoChip}>
-                  <IconSymbol name="calendar" size={14} color={theme.textSecondary} />
-                  <ThemedText type="caption">{movie.release_date?.slice(0, 4)}</ThemedText>
-                </View>
-                <View style={styles.infoChip}>
-                  <IconSymbol name="clock" size={14} color={theme.textSecondary} />
-                  <ThemedText type="caption">{movie.runtime} {t('movie.minutes')}</ThemedText>
-                </View>
-                {movie.genres[0] && (
-                  <View style={styles.infoChip}>
-                    <IconSymbol name="film" size={14} color={theme.textSecondary} />
-                    <ThemedText type="caption">{movie.genres[0].name}</ThemedText>
-                  </View>
-                )}
-              </View>
               <SectionHeader title={t('movie.similar')} />
               <FlatList
                 horizontal
@@ -397,6 +414,13 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
+  },
+  shareButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   synopsis: {
     paddingHorizontal: Spacing.md,

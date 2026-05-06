@@ -1,16 +1,17 @@
 import { Image as ExpoImage } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  ActivityIndicator,
-  Alert,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  TextInput,
-  View,
+    ActivityIndicator,
+    Alert,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Switch,
+    TextInput,
+    View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -23,11 +24,11 @@ import { clearCache, clearWatchedHistory } from '@/db/database';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { uploadToImageKit } from '@/services/imagekit-signed';
 import {
-  DEFAULT_NOTIF_HOUR,
-  getNotificationHour,
-  getNotificationsEnabled,
-  requestNotificationPermission,
-  setNotificationsEnabled,
+    DEFAULT_NOTIF_HOUR,
+    getNotificationHour,
+    getNotificationsEnabled,
+    requestNotificationPermission,
+    setNotificationsEnabled,
 } from '@/services/notifications';
 import * as Notifications from 'expo-notifications';
 
@@ -38,8 +39,19 @@ export default function SettingsScreen() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
   const theme = Colors[colorScheme];
+  const router = useRouter();
   const { themeMode, setThemeMode } = useContext(ThemeContext);
-  const { profile, updateProfile, syncToCloud, isSyncing, firebaseUid } = useUserProfile();
+  const { 
+    profile, 
+    updateProfile, 
+    syncToCloud, 
+    isSyncing, 
+    firebaseUid,
+    isAnonymous,
+    signOut,
+    realtimeEnabled,
+    toggleRealtime,
+  } = useUserProfile();
 
   const [notifEnabled, setNotifEnabled] = useState(false);
   const [notifHour, setNotifHour] = useState(DEFAULT_NOTIF_HOUR);
@@ -169,6 +181,24 @@ export default function SettingsScreen() {
     );
   };
 
+  const handleSignOut = () => {
+    Alert.alert(
+      'Sign Out',
+      'Are you sure you want to sign out?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Sign Out',
+          style: 'destructive',
+          onPress: async () => {
+            await signOut();
+            router.replace('/auth');
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: theme.background }]}
@@ -233,15 +263,29 @@ export default function SettingsScreen() {
         </View>
       </View>
 
-      {}
+      {/* Cloud Section */}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('settings.cloud')}
       </ThemedText>
       <View style={[styles.optionGroup, { backgroundColor: theme.surface }]}>
+        <View style={[styles.optionRow, { borderBottomColor: theme.border }]}>
+          <View style={styles.notifLabelWrap}>
+            <ThemedText>Realtime Sync</ThemedText>
+            <ThemedText type="caption" style={{ color: theme.textMuted }}>
+              Auto-sync data across devices
+            </ThemedText>
+          </View>
+          <Switch
+            value={realtimeEnabled}
+            onValueChange={toggleRealtime}
+            trackColor={{ false: theme.border, true: theme.accent }}
+            thumbColor="#FFFFFF"
+          />
+        </View>
         <Pressable
           onPress={syncToCloud}
           disabled={isSyncing}
-          style={[styles.optionRow, { borderBottomColor: 'transparent' }]}
+          style={[styles.optionRow, { borderBottomColor: theme.border }]}
         >
           {isSyncing ? (
             <ActivityIndicator size="small" color={theme.accent} />
@@ -249,6 +293,14 @@ export default function SettingsScreen() {
             <ThemedText style={{ color: theme.accent }}>{t('settings.syncNow')}</ThemedText>
           )}
         </Pressable>
+        {!isAnonymous && (
+          <Pressable
+            onPress={handleSignOut}
+            style={[styles.optionRow, { borderBottomColor: 'transparent' }]}
+          >
+            <ThemedText style={{ color: theme.error }}>Sign Out</ThemedText>
+          </Pressable>
+        )}
       </View>
 
       {}
@@ -358,7 +410,7 @@ export default function SettingsScreen() {
         </Pressable>
       </View>
 
-      {}
+      {/* Data Section */}
       <ThemedText type="sectionTitle" style={styles.sectionLabel}>
         {t('settings.data')}
       </ThemedText>
@@ -374,6 +426,20 @@ export default function SettingsScreen() {
           style={[styles.optionRow, { borderBottomColor: 'transparent' }]}
         >
           <ThemedText style={{ color: theme.accent }}>{t('settings.clearCache')}</ThemedText>
+        </Pressable>
+      </View>
+
+      {/* Platform API Demo */}
+      <ThemedText type="sectionTitle" style={styles.sectionLabel}>
+        Developer
+      </ThemedText>
+      <View style={[styles.optionGroup, { backgroundColor: theme.surface }]}>
+        <Pressable
+          onPress={() => (router as any).push('/platform-demo')}
+          style={[styles.optionRow, { borderBottomColor: 'transparent' }]}
+        >
+          <ThemedText style={{ color: theme.accent }}>Platform API Demo</ThemedText>
+          <IconSymbol name="chevron.right" size={20} color={theme.textMuted} />
         </Pressable>
       </View>
     </ScrollView>

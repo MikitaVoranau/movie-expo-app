@@ -46,10 +46,27 @@ export async function initDatabase(): Promise<void> {
   }
 
   await db.execAsync(`
-    CREATE TABLE IF NOT EXISTS user_collections (
+    CREATE TABLE IF NOT EXISTS user_lists_v2 (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE,
-      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+      user_id TEXT NOT NULL,
+      movie_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      poster_url TEXT,
+      list_type TEXT NOT NULL,
+      added_at TEXT NOT NULL DEFAULT (datetime('now')),
+      rating REAL,
+      notes TEXT,
+      UNIQUE(user_id, movie_id, list_type)
+    );
+  `);
+
+  await db.execAsync(`
+    CREATE TABLE IF NOT EXISTS user_collections_v2 (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id TEXT NOT NULL,
+      name TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(user_id, name)
     );
   `);
 
@@ -230,4 +247,14 @@ export async function getWatchedGenreStats(): Promise<{ counts: Record<number, n
 
 export async function clearWatchedHistory(): Promise<void> {
   await db.runAsync('DELETE FROM user_lists WHERE list_type = ?', ['watched']);
+}
+
+/**
+ * Очищает все данные пользователя из локальной базы
+ * Используется при смене аккаунта
+ */
+export async function clearAllUserData(): Promise<void> {
+  await db.runAsync('DELETE FROM user_lists');
+  await db.runAsync('DELETE FROM user_collections');
+  console.log('✓ Local database cleared');
 }

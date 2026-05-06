@@ -2,13 +2,13 @@ import { useNetwork } from '@/context/network-context';
 import { getCached, setCached } from '@/db/database';
 import { tmdb } from '@/services/tmdb';
 import type {
-    TmdbCredits,
-    TmdbGenre,
-    TmdbMovie,
-    TmdbMovieDetail,
-    TmdbReview,
-    TmdbVideo,
-    TmdbWatchProviderResult,
+  TmdbCredits,
+  TmdbGenre,
+  TmdbMovie,
+  TmdbMovieDetail, TmdbPersonDetail,
+  TmdbReview,
+  TmdbVideo,
+  TmdbWatchProviderResult,
 } from '@/services/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
